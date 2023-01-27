@@ -1,11 +1,27 @@
 import React from 'react';
+import { Categories } from './components/Categories';
+import { Header } from './components/Header';
+import { Sort } from './components/Sort';
+import { YarnBlock } from './components/YarnBlock';
 import logo from './logo.svg';
-import './App.css';
+import './scss/app.scss';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Knitting shop</h1>
+    <div className="wrapper">
+      <Header />
+      <div className="content">
+        <div className="container">
+          <div className="content__top">
+            <Categories />
+            <Sort />
+          </div>
+          <h2 className="content__title">Вся пряжа</h2>
+          <div className="content__items">
+            <YarnBlock />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
