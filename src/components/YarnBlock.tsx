@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export const YarnBlock: React.FC = () => {
+  const [yarnCount, setYarnCount] = useState(0);
+  const onClickAddButton = () => {
+    setYarnCount(yarnCount + 1);
+  };
+
   return (
     <div className="yarn-block">
       <img
@@ -21,7 +26,10 @@ export const YarnBlock: React.FC = () => {
       </div>
       <div className="yarn-block__bottom">
         <div className="yarn-block__price">от 395 ₽</div>
-        <div className="button button--outline button--add">
+        <button
+          onClick={onClickAddButton}
+          className="button button--outline button--add"
+        >
           <svg
             width="12"
             height="12"
@@ -35,8 +43,8 @@ export const YarnBlock: React.FC = () => {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          <i>{yarnCount}</i>
+        </button>
       </div>
     </div>
   );
