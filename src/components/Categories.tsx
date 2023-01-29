@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export const Categories: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const categoties: string[] = [
+    'Все',
+    'Акриловая',
+    'Мохеровая',
+    'Пуховая',
+    'Шерстяная',
+    'Плюшевая',
+  ];
+
+  const onClickCategory = (i: number) => {
+    setActiveIndex(i);
+  };
+
   return (
     <div className="categories">
       <ul>
-        <li className="active">Вся</li>
-        <li>Акриловая</li>
-        <li>Мохеровая</li>
-        <li>Пуховая</li>
-        <li>Шерстяная</li>
-        <li>Плюшевая</li>
+        {categoties.map((category, i) => (
+          <li
+            key={i}
+            onClick={() => onClickCategory(i)}
+            className={activeIndex === i ? 'active' : ''}
+          >
+            {category}
+          </li>
+        ))}
       </ul>
     </div>
   );
