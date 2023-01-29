@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "imageUrl": "https://pryzha.ru/wa-data/public/shop/products/00/webp/90/33/43390/images/111426/111426.253.webp",
+    "title": "Название",
+    "colors": [0, 1],
+    "weight": 100,
+    "price": 803,
+    "category": 0,
+    "rating": 4
+  },
+  {
+    "id": 1,
+    "imageUrl": "https://pryzha.ru/wa-data/public/shop/products/00/webp/90/33/43390/images/111426/111426.253.webp",
+    "title": "Название2",
+    "colors": [0, 1],
+    "weight": 100,
+    "price": 862,
+    "category": 3,
+    "rating": 1
+  },
+  {
+    "id": 2,
+    "imageUrl": "https://pryzha.ru/wa-data/public/shop/products/00/webp/90/33/43390/images/111426/111426.253.webp",
+    "title": "Название3",
+    "colors": [0, 1],
+    "weight": 100,
+    "price": 553,
+    "category": 2,
+    "rating": 2
+  }
+]

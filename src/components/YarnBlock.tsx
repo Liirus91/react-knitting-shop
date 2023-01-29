@@ -1,35 +1,49 @@
 import React, { useState } from 'react';
 
-export const YarnBlock: React.FC = () => {
-  const [yarnCount, setYarnCount] = useState(0);
-  const onClickAddButton = () => {
-    setYarnCount(yarnCount + 1);
-  };
+type YarnBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  colors: number[];
+  weight: number;
+};
+
+export const YarnBlock: React.FC<YarnBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  colors,
+  weight,
+}) => {
+  const [activeColorId, setActiveColorId] = useState(0);
+
+  const colorsNames = ['желтый', 'синий'];
 
   return (
     <div className="yarn-block">
-      <img
-        className="yarn-block__image"
-        src="https://pryzha.ru/wa-data/public/shop/products/00/webp/90/33/43390/images/111426/111426.253.webp"
-        alt="yarn"
-      />
-      <h4 className="yarn-block__title">Название пряжи</h4>
+      <img className="yarn-block__image" src={imageUrl} alt="yarn" />
+      <h4 className="yarn-block__title">{title}</h4>
       <div className="yarn-block__selector">
         <ul>
-          <li className="active">Вид 1</li>
-          <li>Вид 2</li>
+          {colors.map((colorId) => (
+            <li
+              key={colorId}
+              onClick={() => setActiveColorId(colorId)}
+              className={activeColorId === colorId ? 'active' : ''}
+            >
+              {colorsNames[colorId]}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">Длина 1</li>
-          <li>Длина 2</li>
+          <li className="active">{weight} гр</li>
         </ul>
       </div>
       <div className="yarn-block__bottom">
-        <div className="yarn-block__price">от 395 ₽</div>
-        <button
-          onClick={onClickAddButton}
-          className="button button--outline button--add"
-        >
+        <div className="yarn-block__price">{price} ₽</div>
+        <button className="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -43,7 +57,7 @@ export const YarnBlock: React.FC = () => {
             />
           </svg>
           <span>Добавить</span>
-          <i>{yarnCount}</i>
+          <i>0</i>
         </button>
       </div>
     </div>

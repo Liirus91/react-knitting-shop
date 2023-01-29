@@ -3,7 +3,8 @@ import { Categories } from './components/Categories';
 import { Header } from './components/Header';
 import { Sort } from './components/Sort';
 import { YarnBlock } from './components/YarnBlock';
-import logo from './logo.svg';
+import yarns from './assets/yarns.json';
+
 import './scss/app.scss';
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
           </div>
           <h2 className="content__title">Вся пряжа</h2>
           <div className="content__items">
-            <YarnBlock />
+            {yarns.map((yarn) => (
+              <YarnBlock key={yarn.id} {...yarn} />
+            ))}
           </div>
         </div>
       </div>
