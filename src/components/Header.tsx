@@ -5,7 +5,7 @@ export const Header: React.FC = () => {
     <div className="header">
       <div className="container">
         <div className="header__logo">
-          <img width="38" src="./img/yarn-logo.svg" alt="yarn logo" />
+          <img width="54" src="img/yarn-logo.png" alt="yarn logo" />
           <div>
             <h1>Knitting fake store</h1>
             <p>самая мягкая пряжа во вселенной</p>
