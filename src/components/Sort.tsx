@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export const Sort: React.FC = () => {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const sortList: string[] = ['популярности', 'цене', 'алфавиту'];
+
+  const onClickSortListItem = (i: number) => {
+    setSelected(i);
+    setOpen(false);
+  };
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -17,15 +26,23 @@ export const Sort: React.FC = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => setOpen(!open)}>{sortList[selected]}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {open && (
+        <div className="sort__popup">
+          <ul>
+            {sortList.map((name, i) => (
+              <li
+                key={i}
+                onClick={() => onClickSortListItem(i)}
+                className={selected === i ? 'active' : ''}
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
