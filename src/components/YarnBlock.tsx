@@ -4,8 +4,8 @@ type YarnBlockProps = {
   id: number;
   title: string;
   price: number;
-  imageUrl: string;
-  colors: number[];
+  images: string[];
+  colors: string[];
   weight: number;
 };
 
@@ -13,21 +13,23 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   id,
   title,
   price,
-  imageUrl,
+  images,
   colors,
   weight,
 }) => {
   const [activeColorId, setActiveColorId] = useState(0);
 
-  const colorsNames = ['желтый', 'синий'];
+  //TODO: rename colors
+  const colorsNames = ['gxy0GkW', 'koQEnOo'];
+  const colorsIds = colors.map((color) => colorsNames.indexOf(color));
 
   return (
     <div className="yarn-block">
-      <img className="yarn-block__image" src={imageUrl} alt="yarn" />
+      <img className="yarn-block__image" src={images[0]} alt="yarn" />
       <h4 className="yarn-block__title">{title}</h4>
       <div className="yarn-block__selector">
         <ul>
-          {colors.map((colorId) => (
+          {colorsIds.map((colorId) => (
             <li
               key={colorId}
               onClick={() => setActiveColorId(colorId)}
