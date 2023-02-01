@@ -3,12 +3,12 @@ import { Categories } from './components/Categories';
 import { Header } from './components/Header';
 import { Sort } from './components/Sort';
 import { YarnBlock } from './components/YarnBlock';
-import yarns from './assets/yarns.json';
-
 import './scss/app.scss';
+import { Sceleton } from './components/YarnBlock/Skeleton';
 
-function App() {
+export const App = () => {
   const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('https://api.apisful.com/v1/collections/products/', {
@@ -17,7 +17,10 @@ function App() {
       },
     })
       .then((res) => res.json())
-      .then(({ results }) => setItems(results));
+      .then(({ results }) => {
+        setItems(results);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -31,14 +34,12 @@ function App() {
           </div>
           <h2 className="content__title">Вся пряжа</h2>
           <div className="content__items">
-            {items.map((yarn: any) => (
-              <YarnBlock key={yarn.id} {...yarn} />
-            ))}
+            {isLoading
+              ? [...new Array(6)].map((_, i) => <Sceleton key={i} />)
+              : items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />)}
           </div>
         </div>
       </div>
     </div>
   );
-}
-
-export default App;
+};
