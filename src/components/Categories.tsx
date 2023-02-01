@@ -4,12 +4,12 @@ export const Categories: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const categoties: string[] = [
-    'Все',
-    'Акриловая',
-    'Мохеровая',
-    'Пуховая',
-    'Шерстяная',
-    'Плюшевая',
+    'All',
+    'Acrylic',
+    'Mohair',
+    'Down',
+    'Woolen',
+    'Plush',
   ];
 
   const onClickCategory = (i: number) => {

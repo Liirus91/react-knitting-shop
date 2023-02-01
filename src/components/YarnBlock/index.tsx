@@ -40,11 +40,11 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
           ))}
         </ul>
         <ul>
-          <li className="active">{weight} гр</li>
+          <li className="active">{weight} g</li>
         </ul>
       </div>
       <div className="yarn-block__bottom">
-        <div className="yarn-block__price">{price} ₽</div>
+        <div className="yarn-block__price">{price} $</div>
         <button className="button button--outline button--add">
           <svg
             width="12"
@@ -58,7 +58,7 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
               fill="white"
             />
           </svg>
-          <span>Добавить</span>
+          <span>Add</span>
           <i>0</i>
         </button>
       </div>

@@ -1,19 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logoPng from '../assets/img/yarn-logo.png';
 
 export const Header: React.FC = () => {
   return (
     <div className="header">
       <div className="container">
-        <div className="header__logo">
-          <img width="54" src={logoPng} alt="yarn logo" />
-          <div>
-            <h1>Knitting fake store</h1>
-            <p>самая мягкая пряжа во вселенной</p>
+        <Link to="/">
+          <div className="header__logo">
+            <img width="54" src={logoPng} alt="yarn logo" />
+            <div>
+              <h1>Knitting fake store</h1>
+              <p>softest yarn in the universe</p>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className="header__cart">
-          <a href="/cart.html" className="button button--cart">
+          <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
             <div className="button__delimiter"></div>
             <svg
@@ -46,7 +49,7 @@ export const Header: React.FC = () => {
               />
             </svg>
             <span>3</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
