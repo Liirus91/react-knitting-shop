@@ -19,10 +19,10 @@ export const Home = () => {
         setItems(results);
         setIsLoading(false);
       });
+    window.scroll(0, 0);
   }, []);
   return (
-    <>
-      {' '}
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
@@ -33,6 +33,6 @@ export const Home = () => {
           ? [...new Array(6)].map((_, i) => <Sceleton key={i} />)
           : items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />)}
       </div>
-    </>
+    </div>
   );
 };
