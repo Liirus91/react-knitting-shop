@@ -1,31 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-export const Categories: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
+export const Categories: React.FC<any> = ({ value, onChangeCategory }) => {
   const categoties: string[] = [
     'All',
     'Acrylic',
     'Mohair',
-    'Down',
+    'Fluff',
     'Woolen',
     'Plush',
   ];
 
-  const onClickCategory = (i: number) => {
-    setActiveIndex(i);
-  };
-
   return (
     <div className="categories">
       <ul>
-        {categoties.map((category, i) => (
+        {categoties.map((categoryName, i) => (
           <li
             key={i}
-            onClick={() => onClickCategory(i)}
-            className={activeIndex === i ? 'active' : ''}
+            onClick={() => onChangeCategory(categoryName)}
+            className={categoties.indexOf(value) === i ? 'active' : ''}
           >
-            {category}
+            {categoryName}
           </li>
         ))}
       </ul>
