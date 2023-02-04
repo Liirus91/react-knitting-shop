@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Categories } from '../components/Categories';
+import { Pagination } from '../components/Pagination';
 import { Sort } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
@@ -8,18 +9,16 @@ export const Home: React.FC<any> = ({ searchValue }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryName, setCategoryName] = useState('All');
+  const [currentPage, setCurentPage] = useState(1);
   const [sortType, setSortType] = useState({
     name: 'rating (DESC)',
     sortProperty: 'rating',
   });
 
-  const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
-  const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
-
   useEffect(() => {
     setIsLoading(true);
     const category =
-      categoryName !== 'All' ? categoryName.toLowerCase() : undefined;
+      categoryName !== 'All' ? { icontains: categoryName } : undefined;
     const title = searchValue !== '' ? { icontains: searchValue } : undefined;
 
     fetch(
@@ -30,6 +29,8 @@ export const Home: React.FC<any> = ({ searchValue }) => {
             title,
           }),
           order_by: sortType.sortProperty,
+          per_page: '4',
+          page: `${currentPage}`,
         }),
       {
         headers: {
@@ -44,7 +45,10 @@ export const Home: React.FC<any> = ({ searchValue }) => {
       });
 
     window.scroll(0, 0);
-  }, [categoryName, sortType, searchValue]);
+  }, [categoryName, sortType, searchValue, currentPage]);
+
+  const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
+  const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
 
   return (
     <div className="container">
@@ -60,6 +64,10 @@ export const Home: React.FC<any> = ({ searchValue }) => {
       </div>
       <h2 className="content__title">All yarn</h2>
       <div className="content__items">{isLoading ? skeletons : yarns}</div>
+      <Pagination
+        currentPage={currentPage}
+        onChangePage={(num: number) => setCurentPage(num)}
+      />
     </div>
   );
 };
