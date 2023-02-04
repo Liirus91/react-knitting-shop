@@ -4,7 +4,7 @@ import { Sort } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
 
-export const Home = () => {
+export const Home: React.FC<any> = ({ searchValue }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryName, setCategoryName] = useState('All');
@@ -13,15 +13,21 @@ export const Home = () => {
     sortProperty: 'rating',
   });
 
+  const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
+  const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
+
   useEffect(() => {
     setIsLoading(true);
     const category =
       categoryName !== 'All' ? categoryName.toLowerCase() : undefined;
+    const title = searchValue !== '' ? { icontains: searchValue } : undefined;
+
     fetch(
       'https://api.apisful.com/v1/collections/products/?' +
         new URLSearchParams({
           filter: JSON.stringify({
             category,
+            title,
           }),
           order_by: sortType.sortProperty,
         }),
@@ -36,14 +42,15 @@ export const Home = () => {
         setItems(results);
         setIsLoading(false);
       });
+
     window.scroll(0, 0);
-  }, [categoryName, sortType]);
+  }, [categoryName, sortType, searchValue]);
 
   return (
     <div className="container">
       <div className="content__top">
         <Categories
-          value={categoryName || 'All'}
+          value={categoryName}
           onChangeCategory={(name: string) => setCategoryName(name)}
         />
         <Sort
@@ -52,11 +59,7 @@ export const Home = () => {
         />
       </div>
       <h2 className="content__title">All yarn</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, i) => <Sceleton key={i} />)
-          : items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />)}
-      </div>
+      <div className="content__items">{isLoading ? skeletons : yarns}</div>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logoPng from '../assets/img/yarn-logo.png';
+import { Search } from './Search';
 
-export const Header: React.FC = () => {
+export const Header: React.FC<any> = ({ searchValue, setSearchValue }) => {
   return (
     <div className="header">
       <div className="container">
@@ -15,6 +16,7 @@ export const Header: React.FC = () => {
             </div>
           </div>
         </Link>
+        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
