@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { SearchContext } from '../App';
 import { Categories } from '../components/Categories';
 import { Pagination } from '../components/Pagination';
 import { Sort } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
 
-export const Home: React.FC<any> = ({ searchValue }) => {
+export const Home: React.FC<any> = () => {
+  const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryName, setCategoryName] = useState('All');
