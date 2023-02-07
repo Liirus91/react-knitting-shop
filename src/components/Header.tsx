@@ -9,7 +9,7 @@ export const Header: React.FC<any> = () => {
       <div className="container">
         <Link to="/">
           <div className="header__logo">
-            <img width="54" src={logoPng} alt="yarn logo" />
+            <img width="54" height="54" src={logoPng} alt="yarn logo" />
             <div>
               <h1>Knitting fake store</h1>
               <p>softest yarn in the universe</p>

@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortType } from '../redux/slices/filterSlice';
+import { RootState } from '../redux/store';
 
 export const list = [
   { name: 'rating (DESC)', sortProperty: 'rating' },
   { name: 'rating (ASC)', sortProperty: '-rating' },
   { name: 'price (DESC)', sortProperty: 'price' },
   { name: 'price (ASC)', sortProperty: '-price' },
-  { name: 'alphabet (DESC)', sortProperty: 'alphabet' },
-  { name: 'alphabet (ASC)', sortProperty: '-alphabet' },
+  { name: 'alphabet (DESC)', sortProperty: 'title' },
+  { name: 'alphabet (ASC)', sortProperty: '-title' },
 ];
 
-export const Sort: React.FC<any> = ({ value, onChangeSort }) => {
+export const Sort: React.FC = () => {
+  const dispatch = useDispatch();
+  const sortType = useSelector((state: RootState) => state.filter.sort);
   const [open, setOpen] = useState(false);
 
   const onClickSortListItem = (item: any) => {
-    onChangeSort(item);
+    dispatch(setSortType(item));
     setOpen(false);
   };
 
@@ -33,7 +38,7 @@ export const Sort: React.FC<any> = ({ value, onChangeSort }) => {
           />
         </svg>
         <b>Sort by:</b>
-        <span onClick={() => setOpen(!open)}>{value.name}</span>
+        <span onClick={() => setOpen(!open)}>{sortType.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -42,7 +47,9 @@ export const Sort: React.FC<any> = ({ value, onChangeSort }) => {
               <li
                 key={i}
                 onClick={() => onClickSortListItem(obj)}
-                className={value === i ? 'active' : ''}
+                className={
+                  sortType.sortProperty === obj.sortProperty ? 'active' : ''
+                }
               >
                 {obj.name}
               </li>
