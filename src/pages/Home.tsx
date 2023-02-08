@@ -7,12 +7,12 @@ import { Pagination } from '../components/Pagination';
 import { Sort } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
-import { setCategoryName } from '../redux/slices/filterSlice';
+import { setCategoryName, setCurrentPage } from '../redux/slices/filterSlice';
 import { RootState } from '../redux/store';
 
 export const Home: React.FC<any> = () => {
   const dispatch = useDispatch();
-  const { categoryName, sort } = useSelector(
+  const { categoryName, sort, currentPage } = useSelector(
     (state: RootState) => state.filter
   );
   const sortProperty = sort.sortProperty;
@@ -20,10 +20,13 @@ export const Home: React.FC<any> = () => {
   const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurentPage] = useState(1);
 
   const onChangeCategory = (name: string) => {
     dispatch(setCategoryName(name));
+  };
+
+  const onChangePage = (num: number) => {
+    dispatch(setCurrentPage(num));
   };
 
   useEffect(() => {
@@ -68,10 +71,7 @@ export const Home: React.FC<any> = () => {
       </div>
       <h2 className="content__title">All yarn</h2>
       <div className="content__items">{isLoading ? skeletons : yarns}</div>
-      <Pagination
-        currentPage={currentPage}
-        onChangePage={(num: number) => setCurentPage(num)}
-      />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 };
