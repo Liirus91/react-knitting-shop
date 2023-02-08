@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchContext } from '../App';
@@ -30,29 +31,28 @@ export const Home: React.FC<any> = () => {
     const category =
       categoryName !== 'All' ? { icontains: categoryName } : undefined;
     const title = searchValue !== '' ? { icontains: searchValue } : undefined;
+    const filter = JSON.stringify({
+      category,
+      title,
+    });
+    const params = new URLSearchParams({
+      filter,
+      order_by: sortProperty,
+      per_page: '4',
+      page: `${currentPage}`,
+    });
 
-    fetch(
-      'https://api.apisful.com/v1/collections/products/?' +
-        new URLSearchParams({
-          filter: JSON.stringify({
-            category,
-            title,
-          }),
-          order_by: sortProperty,
-          per_page: '4',
-          page: `${currentPage}`,
-        }),
-      {
-        headers: {
-          'X-Api-Key': 'w5u_4qE8QK4uD50lkFChAaMOCmCz3yIFCcaT5thxVJ8',
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then(({ results }) => {
-        setItems(results);
-        setIsLoading(false);
-      });
+    const API = axios.create({
+      baseURL: 'https://api.apisful.com/v1/',
+      headers: {
+        'X-Api-Key': 'w5u_4qE8QK4uD50lkFChAaMOCmCz3yIFCcaT5thxVJ8',
+      },
+    });
+
+    API.get('collections/products/?' + params).then(({ data }) => {
+      setItems(data.results);
+      setIsLoading(false);
+    });
 
     window.scroll(0, 0);
   }, [categoryName, sortProperty, searchValue, currentPage]);
