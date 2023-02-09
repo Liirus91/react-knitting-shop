@@ -1,17 +1,27 @@
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import qs from 'qs';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../App';
 import { Categories } from '../components/Categories';
 import { Pagination } from '../components/Pagination';
-import { Sort } from '../components/Sort';
+import { Sort, sortList } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
-import { setCategoryName, setCurrentPage } from '../redux/slices/filterSlice';
+import {
+  setCategoryName,
+  setCurrentPage,
+  setFilters,
+} from '../redux/slices/filterSlice';
 import { RootState } from '../redux/store';
 
 export const Home: React.FC<any> = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
+
   const { categoryName, sort, currentPage } = useSelector(
     (state: RootState) => state.filter
   );
@@ -29,8 +39,9 @@ export const Home: React.FC<any> = () => {
     dispatch(setCurrentPage(num));
   };
 
-  useEffect(() => {
+  const fetchYarns = () => {
     setIsLoading(true);
+
     const category =
       categoryName !== 'All' ? { icontains: categoryName } : undefined;
     const title = searchValue !== '' ? { icontains: searchValue } : undefined;
@@ -56,9 +67,43 @@ export const Home: React.FC<any> = () => {
       setItems(data.results);
       setIsLoading(false);
     });
+  };
 
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortList.find(
+        (obj) => obj.sortProperty === params.sortProperty
+      );
+
+      dispatch(setFilters({ ...params, sort }));
+      isSearch.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
     window.scroll(0, 0);
+
+    if (!isSearch.current) {
+      fetchYarns();
+    }
+
+    isSearch.current = false;
   }, [categoryName, sortProperty, searchValue, currentPage]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty,
+        categoryName,
+        currentPage,
+      });
+
+      navigate(`?${queryString}`);
+    }
+
+    isMounted.current = true;
+  }, [categoryName, sortProperty, currentPage, navigate]);
 
   const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
   const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
