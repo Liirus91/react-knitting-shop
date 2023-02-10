@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../../redux/slices/cartSlice';
+import { RootState } from '../../redux/store';
+
+//TODO: rename colors
+const colorsNames = ['gxy0GkW', 'koQEnOo'];
 
 type YarnBlockProps = {
   id: number;
@@ -17,11 +23,26 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   colors,
   weight,
 }) => {
+  const dispatch = useDispatch();
   const [activeColorId, setActiveColorId] = useState(0);
-
-  //TODO: rename colors
-  const colorsNames = ['gxy0GkW', 'koQEnOo'];
+  const cartItem = useSelector((state: RootState) =>
+    state.cart.items.find((obj: any) => obj.id === id)
+  );
+  const addedCount = cartItem ? cartItem.count : 0;
   const colorsIds = colors.map((color) => colorsNames.indexOf(color));
+
+  const onClickAdd = () => {
+    const item = {
+      id,
+      title,
+      price,
+      images,
+      color: colorsNames[activeColorId],
+      weight,
+    };
+
+    dispatch(addItem(item));
+  };
 
   return (
     <div className="pizza-block-wrapper">
@@ -46,7 +67,10 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
         </div>
         <div className="yarn-block__bottom">
           <div className="yarn-block__price">{price} $</div>
-          <button className="button button--outline button--add">
+          <button
+            onClick={onClickAdd}
+            className="button button--outline button--add"
+          >
             <svg
               width="12"
               height="12"
@@ -60,7 +84,7 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
               />
             </svg>
             <span>Add</span>
-            <i>0</i>
+            {addedCount > 0 && <i>{addedCount}</i>}
           </button>
         </div>
       </div>

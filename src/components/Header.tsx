@@ -1,9 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import logoPng from '../assets/img/yarn-logo.png';
+import { RootState } from '../redux/store';
 import { Search } from './Search';
 
 export const Header: React.FC<any> = () => {
+  const { items, totalPrice } = useSelector((state: RootState) => state.cart);
+  const totalCount = items.reduce((sum: any, obj: any) => sum + obj.count, 0);
+
   return (
     <div className="header">
       <div className="container">
@@ -19,7 +24,7 @@ export const Header: React.FC<any> = () => {
         <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>520 ₽</span>
+            <span>{totalPrice} $</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -50,7 +55,7 @@ export const Header: React.FC<any> = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>3</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>
