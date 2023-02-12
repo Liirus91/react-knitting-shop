@@ -39,7 +39,7 @@ export const Home: React.FC<any> = () => {
     dispatch(setCurrentPage(num));
   };
 
-  const fetchYarns = () => {
+  const fetchYarns = async () => {
     setIsLoading(true);
 
     const category =
@@ -63,10 +63,14 @@ export const Home: React.FC<any> = () => {
       },
     });
 
-    API.get('collections/products/?' + params).then(({ data }) => {
-      setItems(data.results);
+    try {
+      const res = await API.get('collections/products/?' + params);
+      setItems(res.data.results);
+    } catch (e) {
+      console.error('Error getting yarn ', e);
+    } finally {
       setIsLoading(false);
-    });
+    }
   };
 
   useEffect(() => {
