@@ -1,7 +1,6 @@
-import axios from 'axios';
 import qs from 'qs';
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useContext, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../App';
 import { Categories } from '../components/Categories';
@@ -14,11 +13,12 @@ import {
   setCurrentPage,
   setFilters,
 } from '../redux/slices/filterSlice';
-import { RootState } from '../redux/store';
+import { fetchYarns, Status } from '../redux/slices/yarnSlice';
+import { RootState, useAppDispatch } from '../redux/store';
 
 export const Home: React.FC<any> = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -26,10 +26,9 @@ export const Home: React.FC<any> = () => {
     (state: RootState) => state.filter
   );
   const sortProperty = sort.sortProperty;
+  const { items, status } = useSelector((state: RootState) => state.yarn);
 
   const { searchValue } = useContext(SearchContext);
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const onChangeCategory = (name: string) => {
     dispatch(setCategoryName(name));
@@ -39,9 +38,7 @@ export const Home: React.FC<any> = () => {
     dispatch(setCurrentPage(num));
   };
 
-  const fetchYarns = async () => {
-    setIsLoading(true);
-
+  const getYarns = async () => {
     const category =
       categoryName !== 'All' ? { icontains: categoryName } : undefined;
     const title = searchValue !== '' ? { icontains: searchValue } : undefined;
@@ -56,21 +53,7 @@ export const Home: React.FC<any> = () => {
       page: `${currentPage}`,
     });
 
-    const API = axios.create({
-      baseURL: 'https://api.apisful.com/v1/',
-      headers: {
-        'X-Api-Key': 'w5u_4qE8QK4uD50lkFChAaMOCmCz3yIFCcaT5thxVJ8',
-      },
-    });
-
-    try {
-      const res = await API.get('collections/products/?' + params);
-      setItems(res.data.results);
-    } catch (e) {
-      console.error('Error getting yarn ', e);
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(fetchYarns(params));
   };
 
   useEffect(() => {
@@ -88,9 +71,10 @@ export const Home: React.FC<any> = () => {
   useEffect(() => {
     window.scroll(0, 0);
 
-    if (!isSearch.current) {
-      fetchYarns();
-    }
+    //TODO: fix bug
+    // if (!isSearch.current) {
+    getYarns();
+    //}
 
     isSearch.current = false;
   }, [categoryName, sortProperty, searchValue, currentPage]);
@@ -119,7 +103,19 @@ export const Home: React.FC<any> = () => {
         <Sort />
       </div>
       <h2 className="content__title">All yarn</h2>
-      <div className="content__items">{isLoading ? skeletons : yarns}</div>
+      {/* TODO: add new component */}
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>
+            An error has occurred <span>😕</span>
+          </h2>
+          <p>Sorry, could not get the yarn. Please try again Later.</p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === Status.LOADING ? skeletons : yarns}
+        </div>
+      )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
