@@ -1,8 +1,7 @@
 import qs from 'qs';
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { SearchContext } from '../App';
 import { Categories } from '../components/Categories';
 import { Pagination } from '../components/Pagination';
 import { Sort, sortList } from '../components/Sort';
@@ -23,11 +22,10 @@ export const Home: React.FC<any> = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryName, sort, currentPage } = useSelector(filterSelector);
+  const { categoryName, sort, currentPage, searchValue } =
+    useSelector(filterSelector);
   const sortProperty = sort.sortProperty;
   const { items, status } = useSelector(yarnSelector);
-
-  const { searchValue } = useContext(SearchContext);
 
   const onChangeCategory = (name: string) => {
     dispatch(setCategoryName(name));
