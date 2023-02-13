@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSortType } from '../redux/slices/filterSlice';
-import { RootState } from '../redux/store';
+import { filterSortSelector, setSortType } from '../redux/slices/filterSlice';
 
 export const sortList = [
   { name: 'rating (DESC)', sortProperty: 'rating' },
@@ -14,7 +13,7 @@ export const sortList = [
 
 export const Sort: React.FC = () => {
   const dispatch = useDispatch();
-  const sortType = useSelector((state: RootState) => state.filter.sort);
+  const sortType = useSelector(filterSortSelector);
   const [open, setOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 

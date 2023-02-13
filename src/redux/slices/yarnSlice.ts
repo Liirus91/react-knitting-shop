@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { RootState } from '../store';
 
 export enum Status {
   LOADING = 'loading',
@@ -51,6 +52,8 @@ export const yarnSlice = createSlice({
     });
   },
 });
+
+export const yarnSelector = (state: RootState) => state.yarn;
 
 export const { setItems } = yarnSlice.actions;
 

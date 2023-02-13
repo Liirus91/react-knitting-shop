@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import logoPng from '../assets/img/yarn-logo.png';
-import { RootState } from '../redux/store';
+import { cartSelector } from '../redux/slices/cartSlice';
 import { Search } from './Search';
 
 export const Header: React.FC<any> = () => {
-  const { items, totalPrice } = useSelector((state: RootState) => state.cart);
+  const { items, totalPrice } = useSelector(cartSelector);
   const totalCount = items.reduce((sum: any, obj: any) => sum + obj.count, 0);
 
   return (

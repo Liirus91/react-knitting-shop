@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../../redux/slices/cartSlice';
-import { RootState } from '../../redux/store';
+import { addItem, cartByIdSelector } from '../../redux/slices/cartSlice';
 
 //TODO: rename colors
 const colorsNames = ['gxy0GkW', 'koQEnOo'];
@@ -25,9 +24,7 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
 }) => {
   const dispatch = useDispatch();
   const [activeColorId, setActiveColorId] = useState(0);
-  const cartItem = useSelector((state: RootState) =>
-    state.cart.items.find((obj: any) => obj.id === id)
-  );
+  const cartItem = useSelector(cartByIdSelector(id));
   const addedCount = cartItem ? cartItem.count : 0;
   const colorsIds = colors.map((color) => colorsNames.indexOf(color));
 

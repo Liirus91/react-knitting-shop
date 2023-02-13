@@ -9,12 +9,13 @@ import { Sort, sortList } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
 import {
+  filterSelector,
   setCategoryName,
   setCurrentPage,
   setFilters,
 } from '../redux/slices/filterSlice';
-import { fetchYarns, Status } from '../redux/slices/yarnSlice';
-import { RootState, useAppDispatch } from '../redux/store';
+import { fetchYarns, Status, yarnSelector } from '../redux/slices/yarnSlice';
+import { useAppDispatch } from '../redux/store';
 
 export const Home: React.FC<any> = () => {
   const navigate = useNavigate();
@@ -22,11 +23,9 @@ export const Home: React.FC<any> = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryName, sort, currentPage } = useSelector(
-    (state: RootState) => state.filter
-  );
+  const { categoryName, sort, currentPage } = useSelector(filterSelector);
   const sortProperty = sort.sortProperty;
-  const { items, status } = useSelector((state: RootState) => state.yarn);
+  const { items, status } = useSelector(yarnSelector);
 
   const { searchValue } = useContext(SearchContext);
 
