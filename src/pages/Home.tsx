@@ -1,7 +1,7 @@
 import qs from 'qs';
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Categories } from '../components/Categories';
 import { Pagination } from '../components/Pagination';
 import { Sort, sortList } from '../components/Sort';
@@ -91,7 +91,11 @@ export const Home: React.FC<any> = () => {
   }, [categoryName, sortProperty, currentPage, navigate]);
 
   const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
-  const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
+  const yarns = items.map((yarn: any) => (
+    <Link to={`/yarn/${yarn.id}`} key={yarn.id}>
+      <YarnBlock {...yarn} />
+    </Link>
+  ));
 
   return (
     <div className="container">
