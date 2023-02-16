@@ -1,6 +1,11 @@
 import React from 'react';
 
-export const Categories: React.FC<any> = ({ value, onChangeCategory }) => {
+type CategoriesProps = { value: string; onChangeCategory: any };
+
+export const Categories: React.FC<CategoriesProps> = ({
+  value,
+  onChangeCategory,
+}) => {
   const categoties: string[] = [
     'All',
     'Acrylic',

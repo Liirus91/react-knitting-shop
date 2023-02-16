@@ -16,7 +16,7 @@ import {
 import { fetchYarns, Status, yarnSelector } from '../redux/slices/yarnSlice';
 import { useAppDispatch } from '../redux/store';
 
-export const Home: React.FC<any> = () => {
+export const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isSearch = useRef(false);
@@ -31,8 +31,8 @@ export const Home: React.FC<any> = () => {
     dispatch(setCategoryName(name));
   };
 
-  const onChangePage = (num: number) => {
-    dispatch(setCurrentPage(num));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getYarns = async () => {

@@ -1,6 +1,7 @@
 import ContentLoader from 'react-content-loader';
+import React from 'react';
 
-export const Sceleton = () => (
+export const Sceleton: React.FC = () => (
   <ContentLoader
     className="yarn-block"
     speed={2}

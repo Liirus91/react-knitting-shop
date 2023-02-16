@@ -8,7 +8,10 @@ import { Search } from './Search';
 export const Header: React.FC<any> = () => {
   const { items, totalPrice } = useSelector(cartSelector);
   const { pathname } = useLocation();
-  const totalCount = items.reduce((sum: any, obj: any) => sum + obj.count, 0);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
 
   return (
     <div className="header">
