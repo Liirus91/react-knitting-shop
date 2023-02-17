@@ -5,7 +5,7 @@ import logoPng from '../assets/img/yarn-logo.png';
 import { cartSelector } from '../redux/slices/cartSlice';
 import { Search } from './Search';
 
-export const Header: React.FC<any> = () => {
+export const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(cartSelector);
   const { pathname } = useLocation();
   const totalCount = items.reduce(

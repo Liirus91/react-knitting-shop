@@ -1,20 +1,23 @@
 import React from 'react';
 
-type CategoriesProps = { value: string; onChangeCategory: any };
+type CategoriesProps = {
+  value: string;
+  onChangeCategory: (name: string) => void;
+};
+
+const categoties: string[] = [
+  'All',
+  'Acrylic',
+  'Mohair',
+  'Fluff',
+  'Woolen',
+  'Plush',
+];
 
 export const Categories: React.FC<CategoriesProps> = ({
   value,
   onChangeCategory,
 }) => {
-  const categoties: string[] = [
-    'All',
-    'Acrylic',
-    'Mohair',
-    'Fluff',
-    'Woolen',
-    'Plush',
-  ];
-
   return (
     <div className="categories">
       <ul>
