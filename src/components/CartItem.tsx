@@ -1,22 +1,27 @@
 import { useDispatch } from 'react-redux';
-import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice';
+import {
+  addItem,
+  CartItem,
+  minusItem,
+  removeItem,
+} from '../redux/slices/cartSlice';
 import React from 'react';
 
-type CartItemProps = {
+type CartItemBlockProps = {
   id: number;
   title: string;
   price: number;
-  images: string;
+  image: string;
   color: string;
   weight: number;
   count: number;
 };
 
-export const CartItem: React.FC<CartItemProps> = ({
+export const CartItemBlock: React.FC<CartItemBlockProps> = ({
   id,
   title,
   price,
-  images,
+  image,
   color,
   weight,
   count,
@@ -24,7 +29,7 @@ export const CartItem: React.FC<CartItemProps> = ({
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
-    dispatch(addItem({ id }));
+    dispatch(addItem({ id } as CartItem));
   };
 
   const onClickMinus = () => {
@@ -40,7 +45,7 @@ export const CartItem: React.FC<CartItemProps> = ({
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="yarn-block__image" src={images} alt="Yarn" />
+        <img className="yarn-block__image" src={image} alt="Yarn" />
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>

@@ -1,7 +1,7 @@
 import qs from 'qs';
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Categories } from '../components/Categories';
 import { Pagination } from '../components/Pagination';
 import { Sort, sortList } from '../components/Sort';
@@ -60,7 +60,14 @@ export const Home: React.FC = () => {
         (obj) => obj.sortProperty === params.sortProperty
       );
 
-      dispatch(setFilters({ ...params, sort }));
+      dispatch(
+        setFilters({
+          searchValue: params.searchValue as string,
+          categoryName: params.categoryName as string,
+          currentPage: Number(params.currentPage),
+          sort: sort || sortList[0],
+        })
+      );
       isSearch.current = true;
     }
   }, []);
@@ -91,11 +98,7 @@ export const Home: React.FC = () => {
   }, [categoryName, sortProperty, currentPage, navigate]);
 
   const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
-  const yarns = items.map((yarn: any) => (
-    <Link to={`/yarn/${yarn.id}`} key={yarn.id}>
-      <YarnBlock {...yarn} />
-    </Link>
-  ));
+  const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
 
   return (
     <div className="container">

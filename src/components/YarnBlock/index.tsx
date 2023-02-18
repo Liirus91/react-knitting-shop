@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addItem, cartByIdSelector } from '../../redux/slices/cartSlice';
 
 //TODO: rename colors
@@ -27,15 +28,17 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   const cartItem = useSelector(cartByIdSelector(id));
   const addedCount = cartItem ? cartItem.count : 0;
   const colorsIds = colors.map((color) => colorsNames.indexOf(color));
+  const image = images[activeColorId];
 
   const onClickAdd = () => {
     const item = {
       id,
       title,
       price,
-      images,
+      image,
       color: colorsNames[activeColorId],
       weight,
+      count: 0,
     };
 
     dispatch(addItem(item));
@@ -44,8 +47,10 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   return (
     <div className="pizza-block-wrapper">
       <div className="yarn-block">
-        <img className="yarn-block__image" src={images[0]} alt="yarn" />
-        <h4 className="yarn-block__title">{title}</h4>
+        <Link to={`/yarn/${id}`}>
+          <img className="yarn-block__image" src={image} alt="yarn" />
+          <h4 className="yarn-block__title">{title}</h4>
+        </Link>
         <div className="yarn-block__selector">
           <ul>
             {colorsIds.map((colorId) => (

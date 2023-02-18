@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
 
@@ -17,14 +17,29 @@ export const API = axios.create({
 
 export const fetchYarns = createAsyncThunk(
   'yarn/fetchYarnsStatus',
-  async (params: any) => {
+  async (params: URLSearchParams) => {
     const { data } = await API.get('collections/products/?' + params);
 
-    return data.results;
+    return data.results as Yarn[];
   }
 );
 
-const initialState = {
+type Yarn = {
+  category: string;
+  colors: string[];
+  images: string[];
+  price: number;
+  rating: number;
+  title: string;
+  weight: number;
+};
+
+interface YarnSliceState {
+  items: Yarn[];
+  status: Status;
+}
+
+const initialState: YarnSliceState = {
   items: [],
   status: Status.LOADING,
 };
@@ -33,7 +48,7 @@ export const yarnSlice = createSlice({
   name: 'yarn',
   initialState,
   reducers: {
-    setItems: (state, action) => {
+    setItems: (state, action: PayloadAction<Yarn[]>) => {
       state.items = action.payload;
     },
   },
@@ -42,7 +57,7 @@ export const yarnSlice = createSlice({
       state.items = [];
       state.status = Status.LOADING;
     });
-    builder.addCase(fetchYarns.fulfilled, (state, action: any) => {
+    builder.addCase(fetchYarns.fulfilled, (state, action) => {
       state.items = action.payload;
       state.status = Status.SUCCESS;
     });
