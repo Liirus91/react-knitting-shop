@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
-  filterSortSelector,
   setSortType,
   SortItem,
   SortPropertyEnum,
@@ -16,9 +15,12 @@ export const sortList: SortItem[] = [
   { name: 'alphabet (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-export const Sort: React.FC = () => {
+type SortProps = {
+  sortType: SortItem;
+};
+
+export const Sort: React.FC<SortProps> = memo(({ sortType }) => {
   const dispatch = useDispatch();
-  const sortType = useSelector(filterSortSelector);
   const [open, setOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -79,4 +81,4 @@ export const Sort: React.FC = () => {
       )}
     </div>
   );
-};
+});

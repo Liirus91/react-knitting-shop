@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 type CategoriesProps = {
   value: string;
@@ -14,23 +14,22 @@ const categoties: string[] = [
   'Plush',
 ];
 
-export const Categories: React.FC<CategoriesProps> = ({
-  value,
-  onChangeCategory,
-}) => {
-  return (
-    <div className="categories">
-      <ul>
-        {categoties.map((categoryName, i) => (
-          <li
-            key={i}
-            onClick={() => onChangeCategory(categoryName)}
-            className={categoties.indexOf(value) === i ? 'active' : ''}
-          >
-            {categoryName}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+export const Categories: React.FC<CategoriesProps> = memo(
+  ({ value, onChangeCategory }) => {
+    return (
+      <div className="categories">
+        <ul>
+          {categoties.map((categoryName, i) => (
+            <li
+              key={i}
+              onClick={() => onChangeCategory(categoryName)}
+              className={categoties.indexOf(value) === i ? 'active' : ''}
+            >
+              {categoryName}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+);

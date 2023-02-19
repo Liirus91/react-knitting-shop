@@ -1,5 +1,5 @@
 import qs from 'qs';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Categories } from '../components/Categories';
@@ -27,9 +27,9 @@ export const Home: React.FC = () => {
   const sortProperty = sort.sortProperty;
   const { items, status } = useSelector(yarnSelector);
 
-  const onChangeCategory = (name: string) => {
+  const onChangeCategory = useCallback((name: string) => {
     dispatch(setCategoryName(name));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -104,7 +104,7 @@ export const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryName} onChangeCategory={onChangeCategory} />
-        <Sort />
+        <Sort sortType={sort} />
       </div>
       <h2 className="content__title">All yarn</h2>
       {/* TODO: add new component */}
