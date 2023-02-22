@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addItem, cartByIdSelector } from '../../redux/slices/cartSlice';
+import { cartByIdSelector } from '../../redux/cart/selectors';
+import { addItem } from '../../redux/cart/slice';
 
 //TODO: rename colors
 const colorsNames = ['gxy0GkW', 'koQEnOo'];

@@ -2,16 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import logoPng from '../assets/img/yarn-logo.png';
-import { cartSelector } from '../redux/slices/cartSlice';
+import { cartSelector } from '../redux/cart/selectors';
+import { calcTotalPrice } from '../utils';
 import { Search } from './Search';
 
 export const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(cartSelector);
   const { pathname } = useLocation();
-  const totalCount = items.reduce(
-    (sum: number, item: any) => sum + item.count,
-    0
-  );
+  const totalCount = calcTotalPrice(items);
   const isMounted = useRef(false);
 
   useEffect(() => {

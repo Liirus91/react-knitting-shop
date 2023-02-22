@@ -7,14 +7,16 @@ import { Pagination } from '../components/Pagination';
 import { Sort, sortList } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
+import { filterSelector } from '../redux/filter/selectors';
 import {
-  filterSelector,
   setCategoryName,
   setCurrentPage,
   setFilters,
-} from '../redux/slices/filterSlice';
-import { fetchYarns, Status, yarnSelector } from '../redux/slices/yarnSlice';
+} from '../redux/filter/slice';
 import { useAppDispatch } from '../redux/store';
+import { fetchYarns } from '../redux/yarn/asyncActions';
+import { yarnSelector } from '../redux/yarn/selectors';
+import { Status } from '../redux/yarn/types';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();

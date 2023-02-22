@@ -1,10 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  setSortType,
-  SortItem,
-  SortPropertyEnum,
-} from '../redux/slices/filterSlice';
+import { setSortType } from '../redux/filter/slice';
+import { SortItem, SortPropertyEnum } from '../redux/filter/types';
 
 export const sortList: SortItem[] = [
   { name: 'rating (DESC)', sortProperty: SortPropertyEnum.RATING_DESC },

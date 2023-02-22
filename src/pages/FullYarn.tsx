@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { API } from '../redux/slices/yarnSlice';
+import { API } from '../redux/yarn/asyncActions';
 
 //TODO: finalize the card
 export const FullYarn: React.FC = () => {
