@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API } from '../redux/yarn/asyncActions';
 
 //TODO: finalize the card
-export const FullYarn: React.FC = () => {
+const FullYarn: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [yarn, setYarn] = useState<{
@@ -12,7 +12,7 @@ export const FullYarn: React.FC = () => {
     price: number;
   }>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetchYarn() {
       try {
         const { data } = await API.get(`collections/products/${id}`);
@@ -37,3 +37,5 @@ export const FullYarn: React.FC = () => {
     </div>
   );
 };
+
+export default FullYarn;
