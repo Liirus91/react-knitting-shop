@@ -4,7 +4,7 @@
 @import './components/all';
 
 body {
-  background-color: $background;
+  background: linear-gradient(70deg, $background, #c0c1ff);
 }
 
 .wrapper {
@@ -318,7 +318,7 @@ body {
 
         &:last-of-type {
           b {
-            color: $orange;
+            color: $blue;
           }
         }
       }
