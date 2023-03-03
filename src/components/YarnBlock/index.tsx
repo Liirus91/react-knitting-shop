@@ -4,8 +4,13 @@ import { Link } from 'react-router-dom';
 import { cartByIdSelector } from '../../redux/cart/selectors';
 import { addItem } from '../../redux/cart/slice';
 
-//TODO: rename colors
-const colorsNames = ['6oMKzYW', '6wGGzlw'];
+const colorsNames = [
+  {
+    id: '6oMKzYW',
+    name: 'yellow',
+  },
+  { id: '6wGGzlw', name: 'red' },
+];
 
 type YarnBlockProps = {
   id: number;
@@ -25,11 +30,18 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   weight,
 }) => {
   const dispatch = useDispatch();
-  const [activeColorId, setActiveColorId] = useState(0);
+  const [activeColor, setActiveColor] = useState<string>(colorsNames[0].name);
   const cartItem = useSelector(cartByIdSelector(id));
   const addedCount = cartItem ? cartItem.count : 0;
-  const colorsIds = colors.map((color) => colorsNames.indexOf(color));
-  const image = images[activeColorId];
+
+  const yarnColors = colors.map(
+    (color) => colorsNames.find((x) => x.id === color) || colorsNames[0]
+  );
+
+  const currentColor =
+    yarnColors.find((color) => color.name === activeColor) || yarnColors[0];
+
+  const image = images[colors.indexOf(currentColor.id)] || images[0];
 
   const onClickAdd = () => {
     const item = {
@@ -37,7 +49,7 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
       title,
       price,
       image,
-      color: colorsNames[activeColorId],
+      color: activeColor,
       weight,
       count: 0,
     };
@@ -54,13 +66,13 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
         </Link>
         <div className="yarn-block__selector">
           <ul>
-            {colorsIds.map((colorId) => (
+            {yarnColors.map((color) => (
               <li
-                key={colorId}
-                onClick={() => setActiveColorId(colorId)}
-                className={activeColorId === colorId ? 'active' : ''}
+                key={color.id}
+                onClick={() => setActiveColor(color.name)}
+                className={activeColor === color.name ? 'active' : ''}
               >
-                {colorsNames[colorId]}
+                {color.name}
               </li>
             ))}
           </ul>
