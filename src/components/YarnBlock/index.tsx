@@ -5,7 +5,7 @@ import { cartByIdSelector } from '../../redux/cart/selectors';
 import { addItem } from '../../redux/cart/slice';
 
 //TODO: rename colors
-const colorsNames = ['gxy0GkW', 'koQEnOo'];
+const colorsNames = ['6oMKzYW', '6wGGzlw'];
 
 type YarnBlockProps = {
   id: number;

@@ -5,7 +5,7 @@ import { Yarn } from './types';
 export const API = axios.create({
   baseURL: 'https://api.apisful.com/v1/',
   headers: {
-    'X-Api-Key': 'w5u_4qE8QK4uD50lkFChAaMOCmCz3yIFCcaT5thxVJ8',
+    'X-Api-Key': 'ks7Dqj0GciTR2vPVwWs6XKUiIdm_BRGkv75dnmgdArM',
   },
 });
 

@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import logoPng from '../assets/img/yarn-logo.png';
 import { cartSelector } from '../redux/cart/selectors';
-import { calcTotalPrice } from '../utils';
+import { calcTotalCount } from '../utils';
 import { Search } from './Search';
 
 export const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(cartSelector);
   const { pathname } = useLocation();
-  const totalCount = calcTotalPrice(items);
+  const totalCount = calcTotalCount(items);
   const isMounted = useRef(false);
 
   useEffect(() => {
