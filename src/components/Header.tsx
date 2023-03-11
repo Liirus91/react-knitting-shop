@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import logoPng from '../assets/img/yarn-logo.png';
 import { cartSelector } from '../redux/cart/selectors';
+import { initialStateFilter, setFilters } from '../redux/filter/slice';
+import { useAppDispatch } from '../redux/store';
 import { calcTotalCount } from '../utils';
 import { Search } from './Search';
 
@@ -11,6 +13,11 @@ export const Header: React.FC = () => {
   const { pathname } = useLocation();
   const totalCount = calcTotalCount(items);
   const isMounted = useRef(false);
+  const dispatch = useAppDispatch();
+
+  const onClickLogo = () => {
+    dispatch(setFilters(initialStateFilter));
+  };
 
   useEffect(() => {
     if (isMounted) {
@@ -24,7 +31,7 @@ export const Header: React.FC = () => {
     <div className="header">
       <div className="container">
         <Link to="/">
-          <div className="header__logo">
+          <div onClick={onClickLogo} className="header__logo">
             <img width="54" height="54" src={logoPng} alt="yarn logo" />
             <div>
               <h1>Knitting fake store</h1>

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilterSliceState, SortPropertyEnum, SortItem } from './types';
 
-const initialState: FilterSliceState = {
+export const initialStateFilter: FilterSliceState = {
   searchValue: '',
   categoryName: 'All',
   currentPage: 1,
@@ -13,7 +13,7 @@ const initialState: FilterSliceState = {
 
 export const filterSlice = createSlice({
   name: 'filters',
-  initialState,
+  initialState: initialStateFilter,
   reducers: {
     setCategoryName: (state, action: PayloadAction<string>) => {
       state.categoryName = action.payload;

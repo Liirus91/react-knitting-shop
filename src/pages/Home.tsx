@@ -75,17 +75,6 @@ export const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    window.scroll(0, 0);
-
-    //TODO: fix bug
-    // if (!isSearch.current) {
-    getYarns();
-    //}
-
-    isSearch.current = false;
-  }, [categoryName, sortProperty, searchValue, currentPage]);
-
-  useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
         sortProperty,
@@ -96,8 +85,12 @@ export const Home: React.FC = () => {
       navigate(`?${queryString}`);
     }
 
+    getYarns();
+
     isMounted.current = true;
-  }, [categoryName, sortProperty, currentPage, navigate]);
+    isSearch.current = false;
+    window.scrollTo(0, 0);
+  }, [categoryName, sortProperty, currentPage, searchValue]);
 
   const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
   const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
