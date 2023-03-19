@@ -7,6 +7,7 @@ import { Pagination } from '../components/Pagination';
 import { Sort, sortList } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
+import { YarnError } from '../components/YarnBlock/YarnError';
 import { filterSelector } from '../redux/filter/selectors';
 import {
   setCategoryName,
@@ -101,15 +102,9 @@ export const Home: React.FC = () => {
         <Categories value={categoryName} onChangeCategory={onChangeCategory} />
         <Sort sortType={sort} />
       </div>
-      <h2 className="content__title">All yarn</h2>
-      {/* TODO: add new component */}
+      <h2 className="content__title">All yarns</h2>
       {status === 'error' ? (
-        <div className="content__error-info">
-          <h2>
-            An error has occurred <span>😕</span>
-          </h2>
-          <p>Sorry, could not get the yarn. Please try again Later.</p>
-        </div>
+        <YarnError />
       ) : (
         <div className="content__items">
           {status === Status.LOADING ? skeletons : yarns}
