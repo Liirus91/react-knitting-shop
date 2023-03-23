@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { API } from '../redux/yarn/asyncActions';
 
-//TODO: finalize the card
 const FullYarn: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -10,6 +9,9 @@ const FullYarn: React.FC = () => {
     images: string[];
     title: string;
     price: number;
+    category: string;
+    rating: number;
+    weight: number;
   }>();
 
   useEffect(() => {
@@ -31,9 +33,21 @@ const FullYarn: React.FC = () => {
 
   return (
     <div className="container">
-      <img src={yarn.images[0]} alt="" />
-      <h2>{yarn.title}</h2>
-      <h4>{yarn.price} $</h4>
+      <div className="full-yarn-block">
+        <div className="full-yarn-block-wrapper">
+          <img src={yarn.images[0]} alt="" />
+          <div className="full-yarn-block">
+            <h2>{yarn.title}</h2>
+            <h4>Price: {yarn.price}$</h4>
+            <h4>Category: {yarn.category}</h4>
+            <h4>Weight: {yarn.weight}g</h4>
+            <h4>Rating: {yarn.rating}</h4>
+          </div>
+        </div>
+        <Link className="button button--black" to="/">
+          <span>Go back</span>
+        </Link>
+      </div>
     </div>
   );
 };

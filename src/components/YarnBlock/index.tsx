@@ -58,7 +58,7 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   };
 
   return (
-    <div className="pizza-block-wrapper">
+    <div className="yarn-block-wrapper">
       <div className="yarn-block">
         <Link to={`/yarn/${id}`}>
           <img className="yarn-block__image" src={image} alt="yarn" />
