@@ -14,6 +14,6 @@ export const fetchYarns = createAsyncThunk(
   async (params: URLSearchParams) => {
     const { data } = await API.get('collections/products/?' + params);
 
-    return data.results as Yarn[];
+    return data;
   }
 );

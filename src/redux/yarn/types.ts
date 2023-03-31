@@ -16,5 +16,6 @@ export type Yarn = {
 
 export interface YarnSliceState {
   items: Yarn[];
+  allItemsCount: number;
   status: Status;
 }

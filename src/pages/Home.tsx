@@ -8,6 +8,7 @@ import { Sort, sortList } from '../components/Sort';
 import { YarnBlock } from '../components/YarnBlock';
 import { Sceleton } from '../components/YarnBlock/Skeleton';
 import { YarnError } from '../components/YarnBlock/YarnError';
+import { ITEMS_ON_PAGE } from '../constants';
 import { filterSelector } from '../redux/filter/selectors';
 import {
   setCategoryName,
@@ -28,7 +29,7 @@ export const Home: React.FC = () => {
   const { categoryName, sort, currentPage, searchValue } =
     useSelector(filterSelector);
   const sortProperty = sort.sortProperty;
-  const { items, status } = useSelector(yarnSelector);
+  const { items, status, allItemsCount } = useSelector(yarnSelector);
 
   const onChangeCategory = useCallback((name: string) => {
     dispatch(setCategoryName(name));
@@ -49,7 +50,7 @@ export const Home: React.FC = () => {
     const params = new URLSearchParams({
       filter,
       order_by: sortProperty,
-      per_page: '4',
+      per_page: `${ITEMS_ON_PAGE}`,
       page: `${currentPage}`,
     });
 
@@ -93,8 +94,12 @@ export const Home: React.FC = () => {
     window.scrollTo(0, 0);
   }, [categoryName, sortProperty, currentPage, searchValue]);
 
-  const skeletons = [...new Array(4)].map((_, i) => <Sceleton key={i} />);
+  const skeletons = [...new Array(ITEMS_ON_PAGE)].map((_, i) => (
+    <Sceleton key={i} />
+  ));
   const yarns = items.map((yarn: any) => <YarnBlock key={yarn.id} {...yarn} />);
+
+  const pageCount = Math.ceil(allItemsCount / ITEMS_ON_PAGE);
 
   return (
     <div className="container">
@@ -110,7 +115,11 @@ export const Home: React.FC = () => {
           {status === Status.LOADING ? skeletons : yarns}
         </div>
       )}
-      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
+      <Pagination
+        currentPage={currentPage}
+        onChangePage={onChangePage}
+        pageCount={pageCount}
+      />
     </div>
   );
 };
