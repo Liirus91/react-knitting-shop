@@ -30,13 +30,14 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   weight,
 }) => {
   const dispatch = useDispatch();
-  const [activeColor, setActiveColor] = useState<string>(colorsNames[0].name);
-  const cartItem = useSelector(cartByIdSelector(id));
-  const addedCount = cartItem ? cartItem.count : 0;
 
   const yarnColors = colors.map(
     (color) => colorsNames.find((x) => x.id === color) || colorsNames[0]
   );
+  const [activeColor, setActiveColor] = useState<string>(yarnColors[0].name);
+
+  const cartItem = useSelector(cartByIdSelector(id));
+  const addedCount = cartItem ? cartItem.count : 0;
 
   const currentColor =
     yarnColors.find((color) => color.name === activeColor) || yarnColors[0];
