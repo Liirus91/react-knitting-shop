@@ -43,9 +43,6 @@ export const App = () => {
               </Suspense>
             }
           />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/yarn/:id" element={<FullYarn />} />
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>

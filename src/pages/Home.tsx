@@ -19,6 +19,7 @@ import { useAppDispatch } from '../redux/store';
 import { fetchYarns } from '../redux/yarn/asyncActions';
 import { yarnSelector } from '../redux/yarn/selectors';
 import { Status } from '../redux/yarn/types';
+import NotFound from './NotFound';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -107,13 +108,19 @@ export const Home: React.FC = () => {
         <Categories value={categoryName} onChangeCategory={onChangeCategory} />
         <Sort sortType={sort} />
       </div>
-      <h2 className="content__title">All yarns</h2>
-      {status === 'error' ? (
-        <YarnError />
+      {status === Status.SUCCESS && yarns.length === 0 ? (
+        <NotFound />
       ) : (
-        <div className="content__items">
-          {status === Status.LOADING ? skeletons : yarns}
-        </div>
+        <>
+          <h2 className="content__title">All yarns</h2>
+          {status === Status.ERROR ? (
+            <YarnError />
+          ) : (
+            <div className="content__items">
+              {status === Status.LOADING ? skeletons : yarns}
+            </div>
+          )}
+        </>
       )}
       <Pagination
         currentPage={currentPage}
