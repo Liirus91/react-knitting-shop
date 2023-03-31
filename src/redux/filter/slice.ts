@@ -17,9 +17,11 @@ export const filterSlice = createSlice({
   reducers: {
     setCategoryName: (state, action: PayloadAction<string>) => {
       state.categoryName = action.payload;
+      state.currentPage = 1;
     },
     setSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
+      state.currentPage = 1;
     },
     setSortType: (state, action: PayloadAction<SortItem>) => {
       state.sort = action.payload;
