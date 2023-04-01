@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from './components/Header';
+import { Loader } from './components/Loader';
 import { Home } from './pages/Home';
 import './scss/app.scss';
 
@@ -22,7 +23,7 @@ export const App = () => {
           <Route
             path="/cart"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Loader />}>
                 <Cart />
               </Suspense>
             }
@@ -30,7 +31,7 @@ export const App = () => {
           <Route
             path="/yarn/:id"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Loader />}>
                 <FullYarn />
               </Suspense>
             }
@@ -38,7 +39,7 @@ export const App = () => {
           <Route
             path="*"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Loader />}>
                 <NotFound />
               </Suspense>
             }

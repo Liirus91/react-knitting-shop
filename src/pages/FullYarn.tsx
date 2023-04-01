@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Loader } from '../components/Loader';
 import { API } from '../redux/yarn/asyncActions';
 
 const FullYarn: React.FC = () => {
@@ -28,7 +29,7 @@ const FullYarn: React.FC = () => {
   }, []);
 
   if (!yarn) {
-    return <>'Loading...'</>;
+    return <Loader />;
   }
 
   return (
