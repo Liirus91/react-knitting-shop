@@ -25,16 +25,16 @@ export const CartItemBlock: React.FC<CartItemBlockProps> = ({
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
-    dispatch(addItem({ id } as CartItem));
+    dispatch(addItem({ id, color } as CartItem));
   };
 
   const onClickMinus = () => {
-    dispatch(minusItem(id));
+    dispatch(minusItem({ id, color }));
   };
 
   const onClickRemove = () => {
-    if (window.confirm('Are you sure you eant to remove?')) {
-      dispatch(removeItem(id));
+    if (window.confirm('Are you sure you want to remove?')) {
+      dispatch(removeItem({ id, color }));
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { cartByIdSelector } from '../../redux/cart/selectors';
+import { cartByIdAndColorSelector } from '../../redux/cart/selectors';
 import { addItem } from '../../redux/cart/slice';
 
 const colorsNames = [
@@ -36,7 +36,7 @@ export const YarnBlock: React.FC<YarnBlockProps> = ({
   );
   const [activeColor, setActiveColor] = useState<string>(yarnColors[0].name);
 
-  const cartItem = useSelector(cartByIdSelector(id));
+  const cartItem = useSelector(cartByIdAndColorSelector(id, activeColor));
   const addedCount = cartItem ? cartItem.count : 0;
 
   const currentColor =
