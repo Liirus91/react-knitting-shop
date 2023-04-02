@@ -2,18 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Loader } from '../components/Loader';
 import { API } from '../redux/yarn/asyncActions';
+import { Yarn } from '../redux/yarn/types';
 
 const FullYarn: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [yarn, setYarn] = useState<{
-    images: string[];
-    title: string;
-    price: number;
-    category: string;
-    rating: number;
-    weight: number;
-  }>();
+  const [yarn, setYarn] = useState<Yarn>();
 
   useEffect(() => {
     async function fetchYarn() {

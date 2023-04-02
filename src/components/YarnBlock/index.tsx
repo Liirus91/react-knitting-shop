@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { colorsNames } from '../../constants';
 import { cartByIdAndColorSelector } from '../../redux/cart/selectors';
 import { addItem } from '../../redux/cart/slice';
-
-const colorsNames = [
-  {
-    id: '6oMKzYW',
-    name: 'yellow',
-  },
-  { id: '6wGGzlw', name: 'red' },
-];
 
 type YarnBlockProps = {
   id: number;
