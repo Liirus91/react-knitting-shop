@@ -4,7 +4,7 @@
 
 For backend used [apisful](https://www.apisful.com/)
 
-# The project used:
+# Used on the project:
 
 - **ReactJS**
 - **TypeScript**
